@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="فيديوهات وكيروسيلات وبوستات لتطبيق Urate — صُنعت بالكامل عبر تطبيق مصنع المحتوى. حمّلها بمقاس انستقرام أو تيكتوك.">
+<meta property="og:title" content="محتوى Urate — صُنع عبر مصنع المحتوى">
+<meta property="og:description" content="فيديوهات موشن وكيروسيلات وبوستات جاهزة للتحميل بمقاس انستقرام وتيكتوك.">
+<meta property="og:image" content="og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.png">
+<title>محتوى Urate — مصنع المحتوى</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: brand-dark review board — sticky section tabs, then videos (phone-ratio players), carousels (swipe strips), posts (grid); every item carries its copy-ready caption. */
+:root{
+  --bg:#011a31; --surface:#04284a; --surface2:#0a3459; --line:rgba(143,169,196,.18);
+  --fg:#f2f7ff; --mut:#8fa9c4; --blue:#5592ff; --cyan:#00bbff; --yellow:#f8a602;
+  --grad:linear-gradient(90deg,var(--blue),var(--cyan));
+  --display:"Tajawal",system-ui,sans-serif; --body:"Tajawal",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;direction:rtl;padding-inline:20px;
+  background-image:radial-gradient(900px 500px at 100% -10%,rgba(0,187,255,.16),transparent 60%),radial-gradient(800px 600px at -10% 30%,rgba(85,146,255,.12),transparent 60%)}
+.wrap{max-width:1160px;margin-inline:auto;padding-block:40px 80px}
+a{color:var(--cyan)}
+header.hero{display:grid;gap:18px;padding-block:24px 30px}
+.mark{display:flex;align-items:center;gap:12px;font-weight:900;font-size:22px;direction:ltr;justify-content:flex-end}
+.mark svg{width:34px;height:34px}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(34px,6vw,60px);line-height:1.12;margin:0;text-wrap:balance}
+h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--mut);max-width:62ch;margin:0;font-size:18px}
+.stats{display:flex;flex-wrap:wrap;gap:10px}
+.stat{padding:8px 16px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-weight:700;font-size:15px}
+.stat b{color:var(--cyan);font-variant-numeric:tabular-nums}
+.rules{display:flex;flex-wrap:wrap;gap:8px;font-size:14px;color:var(--mut)}
+.rules span{padding:4px 12px;border-radius:8px;border:1px dashed var(--line)}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;gap:8px;padding-block:12px;background:linear-gradient(var(--bg) 75%,transparent);overflow-x:auto}
+nav.tabs a{flex:none;text-decoration:none;color:var(--fg);font-weight:700;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+nav.tabs a:hover,nav.tabs a:focus-visible{border-color:var(--cyan);outline:none}
+
+section{padding-block:28px 10px;scroll-margin-top:70px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+h2{font-family:var(--display);font-weight:900;font-size:clamp(26px,4vw,38px);margin:0}
+.sec-head p{margin:0;color:var(--mut);font-size:15px}
+
+.grid{display:grid;gap:22px;align-items:start}
+.g-video{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.g-car{grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+.g-post{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.item{display:flex;flex-direction:column;gap:12px;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:14px}
+.media{border-radius:14px;overflow:hidden;background:#000;position:relative}
+.media video{display:block;width:100%;aspect-ratio:9/16;max-width:100%;background:#000}
+.media img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;direction:rtl}
+.strip::-webkit-scrollbar{display:none}
+.strip img{flex:0 0 100%;scroll-snap-align:start}
+.dots{display:flex;gap:6px;justify-content:center}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .2s,width .2s}
+.dots i.on{background:var(--cyan);width:18px;border-radius:6px}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:rgba(1,26,49,.75);color:var(--fg);font-size:20px;cursor:pointer}
+.nav-btn:focus-visible{outline:2px solid var(--cyan)}
+.nav-btn.prev{right:8px}.nav-btn.next{left:8px}
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.code{font-weight:900;font-size:13px;padding:3px 9px;border-radius:7px;background:var(--grad);color:#011a31;direction:ltr}
+.meta h3{margin:0;font-size:19px;font-weight:900}
+.meta .len{color:var(--mut);font-size:14px;margin-inline-start:auto;font-variant-numeric:tabular-nums}
+details{border-top:1px solid var(--line);padding-top:10px}
+summary{cursor:pointer;font-weight:700;color:var(--cyan);list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:20px}
+details[open] summary::after{content:"−"}
+.cap{white-space:pre-wrap;margin:10px 0 6px;font-size:15.5px;line-height:1.75}
+.tags{color:var(--cyan);font-size:14px;line-height:1.8;word-break:break-word}
+.copy{margin-top:10px;font:inherit;font-weight:700;font-size:14px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--fg);cursor:pointer}
+.copy:hover,.copy:focus-visible{border-color:var(--cyan);outline:none}
+.script{font-size:13.5px;color:var(--mut);max-height:320px;overflow:auto;margin-top:12px;padding:12px;border-radius:12px;background:var(--bg)}
+.script>b{color:var(--fg);display:block;margin-bottom:6px}
+.script p{margin:0 0 8px}
+.script table{border-collapse:collapse;width:100%;min-width:520px}
+.script th,.script td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right;vertical-align:top}
+.script th{color:var(--fg);font-weight:700;position:sticky;top:-12px;background:var(--bg)}
+.script td:first-child{white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--cyan)}
+footer{margin-top:50px;color:var(--mut);font-size:14px;border-top:1px solid var(--line);padding-top:18px}
+
+.made{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 16px;border-radius:18px;background:linear-gradient(135deg,rgba(248,166,2,.14),rgba(255,94,58,.10));border:1px solid rgba(248,166,2,.35)}
+.made img{height:58px;width:auto;flex:none}
+.made p{margin:0;font-weight:700;font-size:16px;line-height:1.5}
+.made small{display:block;color:var(--mut);font-weight:500;font-size:14px}
+.credit{display:grid;justify-items:center;gap:10px;text-align:center}
+.credit img{height:84px;width:auto}
+.credit p{margin:0;color:var(--fg);font-weight:700;font-size:16px}
+@media (max-width:480px){.made img{height:64px}.credit img{height:68px}}
+
+.dl{display:flex;flex-wrap:wrap;gap:8px}
+.dl-label{width:100%;font-size:13px;color:var(--mut);font-weight:700}
+.dl a{flex:1 1 140px;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;font-size:14px;padding:10px 12px;border-radius:12px;color:#011a31;background:var(--grad);min-height:44px;text-align:center;line-height:1.3}
+.dl a.alt{background:var(--surface2);color:var(--fg);border:1px solid var(--line)}
+.dl a:hover,.dl a:focus-visible{filter:brightness(1.08);outline:2px solid var(--cyan);outline-offset:2px}
+.dl a svg{width:18px;height:18px;flex:none}
+.dl a small{display:block;font-weight:500;font-size:12px;opacity:.8}
+.sizes{display:flex;flex-wrap:wrap;gap:10px;font-size:14px;color:var(--mut)}
+.sizes b{color:var(--fg)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dots i{transition:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+  <div class="made"><img src="masna3-logo.png" alt="مصنع المحتوى" width="720" height="239"><p>تم إنشاء جميع الفيديوهات والمحتوى في هذه الصفحة عبر تطبيق مصنع المحتوى<small>التصميم والموشن والكابشن والهاشتاقات</small></p></div>
+    <div class="mark"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 90 94"><path d="M6.46 69.53c3.17 2.5 6.37 4.94 10.19 6.36 13.43 5 26 3.14 37.2-5.58A22.62 22.62 0 0 0 62.52 52c.09-15.33 0-30.65 0-46 0-3.81.25-4.16 4-3.33C79 5.47 87.64 14.76 87.88 27.38c.17 8.26.08 16.53 0 24.79a39.38 39.38 0 0 1-31.35 38.47c-10.38 2.29-20.47 2.18-30.31-2.12a44.12 44.12 0 0 1-20-17.6A3.08 3.08 0 0 1 6 70z" fill="#00bbff"/><path d="M0 23.1V3.46C0 .3.65-.42 3.62.2c12.16 2.55 21.27 11 21.7 24.33.25 7.74.11 15.5 0 23.26-.08 6.65 2.25 12 7.7 16 2 1.44 1.88 2.15-.37 3.16-7.94 3.54-20.48.89-26.83-7.16C1.79 54.67.3 48.77.1 42.48-.1 36 .06 29.56.06 23.1z" fill="#5592ff"/></svg>Urate</div>
+    <h1>محتوى السوشال ميديا <span>لطلبة الجامعات</span></h1>
+    <p class="lede">فيديوهات موشن لتيكتوك والريلز، وكيروسيلات وبوستات لانستقرام. كل قطعة معها الكابشن والهاشتاقات جاهزة للنسخ. اللهجة كويتية، والخط Tajawal، والألوان والشعار من التطبيق.</p>
+    <div class="stats" id="stats"></div>
+    <div class="sizes"><span><b>انستقرام</b> <bdi dir="ltr">4:5 · 1080×1350</bdi></span><span><b>تيكتوك وريلز</b> <bdi dir="ltr">9:16 · 1080×1920</bdi></span></div>
+    <div class="rules"><span>اختبارات</span><span>تلخيص</span><span>كروت مراجعة</span><span>بحوث وتقارير</span><span>تقييم الدكاترة والبحث عنهم</span></div>
+  </header>
+
+  <nav class="tabs" aria-label="أقسام المحتوى">
+    <a href="#videos">الفيديوهات</a><a href="#carousels">الكيروسيلات</a><a href="#posts">البوستات</a>
+  </nav>
+
+  <section id="videos"><div class="sec-head"><h2>فيديوهات موشن</h2><p>العرض هنا مضغوط · التحميل بالدقة الكاملة</p></div><div class="grid g-video" id="g-video"></div></section>
+  <section id="carousels"><div class="sec-head"><h2>كيروسيلات انستقرام</h2><p>اسحب لتشوف الشرايح · التحميل لكل الشرايح أو للشريحة الحالية</p></div><div class="grid g-car" id="g-carousel"></div></section>
+  <section id="posts"><div class="sec-head"><h2>بوستات منفردة</h2><p>صورة وحدة بكل مقاس</p></div><div class="grid g-post" id="g-post"></div></section>
+
+  <footer class="credit"><img src="masna3-logo.png" alt="مصنع المحتوى" width="720" height="239" loading="lazy"><p>صُنع بالكامل عبر تطبيق مصنع المحتوى</p></footer>
+</div>
+
+<script>
+const DATA = {"video": [{"id": "V1", "title": "قبل لا تسجل", "cap": "قبل لا تسجّل أي مادة… شوف منو الدكتور 👀\nبـ Urate تدوّر على أي دكتور بالاسم، تشوف تقييمات الطلبة وتعليقاتهم، وتقارن بين دكتورين.\nجامعة الكويت • التطبيقي • الجامعات الخاصة\nوقيّم دكتورك… عشان اللي بعدك 💙\nحمّل Urate — App Store · Google Play", "tags": "#Urate #ادرس_اذكى #جامعة_الكويت #التطبيقي #طلاب_الكويت #تسجيل_المواد #الكويت #جامعات_الكويت #تقييم_الدكاترة", "media": [], "video": "m/V1.mp4", "poster": "m/V1_cover.jpg", "dur": 26.0, "script": "<p>فيديو موشن عمودي 1080×1920، 60 فريم، <b>26 ثانية</b>. بدون تعليق صوتي: كتابة حركية + مؤثرات + ملف صوتي بالخلفية.</p><table><thead><tr><th>الوقت</th><th>النص على الشاشة</th><th>اللي يصير بصرياً</th><th>المؤثر الصوتي</th></tr></thead><tbody><tr><td>0.0–1.25</td><td>«لا تسجّل أي مادة…»</td><td>«لا» بالأصفر تخبط مع خط تحتها، «تسجّل» و«أي مادة…» تخبط وراها بانقسام لوني ورجّة، خطوط سرعة بالخلفية</td><td>impact · tick · impact</td></tr><tr><td>1.25–2.5</td><td>«قبل لا تشوف هالفيديو»</td><td>السطر الأول يصغر ويطلع فوق، «قبل لا تشوف» تخبط، «هالفيديو» على لوح بالتدرّج الأزرق مايل + فلاش وشرار وموجة</td><td>riser · swoosh · boom</td></tr><tr><td>2.5–3.5</td><td>«كلنا مرّينا فيها»</td><td>انتقال قليتش، كرت «جدولي» يطلع فيه محاضرة ودكتور (صورة رمزية بلا اسم)</td><td>glitch</td></tr><tr><td>3.5–4.5</td><td>«سجّلت عند دكتور…»</td><td>شارة «تم التسجيل ✓» تنبثق على الكرت</td><td>whoosh · pop</td></tr><tr><td>4.5–6.0</td><td>«وندمت طول الكورس»</td><td>الكرت ينشق ويتقلّب للأحمر: ✕ كبيرة وأسابيع الكورس كلها تتعبّى أحمر، الخلفية تحمرّ</td><td>glitch · impact · slide</td></tr><tr><td>5.5–6.0</td><td>—</td><td>سكتة بالموسيقى قبل الكشف</td><td>riser</td></tr><tr><td>6.0–9.0</td><td>«الحين عندك Urate»</td><td>حرف U ثلاثي الأبعاد: النصين يطيرون ويتركّبون، هالة متوهجة وشرار وأشعة</td><td>boom · shimmer · whoosh</td></tr><tr><td>9.0–12.0</td><td>«دوّر على أي دكتور بالاسم»</td><td>شاشة فاتحة: شريط بحث ينكتب فيه «اسم الدكتور…»، 3 كروت نتائج تنزلق (صور رمزية + نجوم، بلا أسماء)، ضغطة على أول كرت</td><td>whoosh · typing · 3× pop · tick</td></tr><tr><td>12.0–15.0</td><td>«شوف تقييمات الطلبة وتعليقاتهم»</td><td>كرت دكتور، 5 نجوم تتعبّى وحدة وحدة، فقاعات تعليقات: «شرحه واضح» «يعطي واجبات وايد» «تعامله راقي»</td><td>swoosh · shimmer · 3× pop</td></tr><tr><td>15.0–18.0</td><td>«قارن بين دكتورين»</td><td>كرتين «دكتور 1» «دكتور 2» جنب بعض + شارة VS، أعمدة تتعبّى والأعلى يتوهج، شارة «مقارناتي»</td><td>whoosh · slide · impact · pop</td></tr><tr><td>18.0–20.0</td><td>«جامعة الكويت • التطبيقي • الجامعات الخاصة»</td><td>قبعة تخرج، خط ينرسم، 3 حبوب تنبثق بالتتابع مع شرار</td><td>whoosh · 3× pop</td></tr><tr><td>20.0–22.5</td><td>«وقيّم دكتورك… عشان اللي بعدك»</td><td>خلفية بالتدرّج، 5 نجوم تنضغط وتتلوّن أصفر، «عشان اللي بعدك» على لوح كحلي</td><td>swoosh · 5× tick · impact</td></tr><tr><td>22.5–26.0</td><td>شعار Urate · «ادرس اذكى» · «حمّل Urate» · «App Store · Google Play»</td><td>انتقال دائري، الشعار يلمع، زر التحميل ينبض، روبوت Urate AI يطل من تحت</td><td>riser · impact · shimmer · pop</td></tr></tbody></table>"}, {"id": "V2", "title": "ليلة الاختبار", "cap": "الساعة 2 الفجر وباجر اختبار والملزمة للحين ما انفتحت؟\nلا تحاتي… ارفع ملف المادة (PDF أو DOCX) على Urate، والذكاء الاصطناعي يطلع لك منه:\n• ملخص (سريع، قياسي، مفصّل، أو مخصّص)\n• كروت مراجعة تقلبها وتتابع تقدّمك\n• اختبار تجريبي بالوضع المتقدم أو الكلاسيكي، مع شرح الإجابة\nكله من ملفك انت. ادرس اذكى\nحمّل Urate من App Store و Google Play", "tags": "#Urate #ادرس_اذكى #جامعة_الكويت #التطبيقي #طلاب_الكويت #ليلة_الاختبار #اختبارات #مذاكرة #ملخصات #ذكاء_اصطناعي #الكويت #دراسة", "media": [], "video": "m/V2.mp4", "poster": "m/V2_cover.jpg", "dur": 25.0, "script": "<p>موشن قرافيكس بدون تعليق صوتي — النص على الشاشة يحكي، مع خلفية صوتية على الإيقاع (120 BPM) ومؤثرات.</p><table><thead><tr><th>الوقت (ث)</th><th>النص على الشاشة</th><th>اللي يصير بصرياً</th><th>المؤثر الصوتي</th></tr></thead><tbody><tr><td>0.0–1.0</td><td>«الساعة 2 الفجر…»</td><td>ساعة دائرية كبيرة: عقرب يلف وعلامات الثواني تنور أزرق، «1:59» يقلب لـ«2:00» ويتحول أصفر مع نبضة حلقة</td><td>تك تك تك تك ← بوب على «2:00»</td></tr><tr><td>1.0–2.0</td><td>«وباجر اختبار» («اختبار» بالأصفر)</td><td>ضربة: فلاش أبيض + اهتزاز الشاشة، الساعة تصغر وتطلع فوق، النص يدخل كبير</td><td>impact + riser</td></tr><tr><td>2.0–3.0</td><td>«والملزمة ما انفتحت»</td><td>النص يطلع فوق، رزمة أوراق سميكة مع أيقونة PDF تطلع من تحت وتهتز بقوة</td><td>whoosh + glitch</td></tr><tr><td>3.0–6.0</td><td>«لا تحاتي…» / «ارفع الملف بس»</td><td>انتقال زوم. إطار جوال فيه حرف U ومنطقة رفع منقطة؛ ملف PDF يطير بقوس مع أثر مضيء ويدخل الجوال، خط الرفع ينرسم 0←100%، علامة صح خضرا</td><td>swoosh، whoosh، pop، typing، shimmer</td></tr><tr><td>6.0–8.5</td><td>«Urate AI» + «استخراج المحتوى» ← «تحديد المواضيع الرئيسية» ← «إنشاء الأسئلة»</td><td>مسح أفقي. لودر: U بالنص وحلقات متدرّجة تلف؛ الخطوات الثلاث تتفعل وحدة وحدة (سبينر ← صح) وخط تقدّم تحت</td><td>typing + 3 pops متصاعدة</td></tr><tr><td>8.5–11.5</td><td>«تبي ملخص؟» + «تختار نوع الملخص» + «سريع · قياسي · مفصّل · مخصّص»</td><td>انتقال دائرة لمشهد فاتح. كرت التلخيص (card_books) يطفو، أربع شرايح تنبثق، والتحديد ينط بينها على الإيقاع</td><td>4 pops + ticks على البيت</td></tr><tr><td>11.5–15.0</td><td>«تبي كروت مراجعة؟» + «تقدّمك»</td><td>دفع لفوق. 3D: رزمة كروت؛ الأول ينقلب من «سؤال» لـ«الجواب» مع شرار مضيء، يطير، والثاني ينقلب؛ حلقة التقدّم 0% ← 50% ← 100%</td><td>whoosh، slide، whoosh، shimmer</td></tr><tr><td>15.0–19.0</td><td>«تبي تختبر نفسك؟» + «الوضع المتقدم» / «الوضع الكلاسيكي» + «شرح الإجابة»</td><td>مسح أفقي. كرت سؤال اختيار من متعدد (أ ب ج د)، المؤشر يضغط «ب» فيصير أخضر بصح، الباقي يخفت، يطلع شريط «شرح الإجابة»، ومؤشر الوضع يتنقل بين المتقدم والكلاسيكي</td><td>pops، pop قوي + shimmer على الضغطة، slide</td></tr><tr><td>19.0–21.5</td><td>«كله بالذكاء الاصطناعي…» / «ومن ملفك انت»</td><td>زوم. روبوت Urate AI يطلع من تحت مع هالة، وكروت التلخيص والمراجعة والاختبارات تدور حوله بمدار، وملف PDF جنبه</td><td>shimmer + sub drop</td></tr><tr><td>21.5–25.0</td><td>شعار Urate + «ادرس اذكى» + زر «حمّل Urate» + «App Store · Google Play»</td><td>فلاش. الشعار يدخل بتوهج، «ادرس اذكى» كلمة كلمة، الزر المتدرّج ينبض على الإيقاع مع لمعة، جزيئات تطلع</td><td>riser + impact، shimmer، pop</td></tr></tbody></table>"}, {"id": "V3", "title": "البحث علينا", "cap": "الدكتور طلب بحث والأسبوع الياي قريب؟ 😅\nخلّه على Urate 💙\nارفع ملفاتك أو اكتب التفاصيل، اختار النوع واللغة (العربية أو English) وعدد الصفحات… وتابع شغلك خطوة بخطوة.\nوبعدها حمّله، اطبعه، أو شاركه.\nادرس اذكى — حمّل Urate من App Store و Google Play.", "tags": "#Urate #ادرس_اذكى #بحوث #تقارير #جامعة_الكويت #التطبيقي #طلاب_الكويت #الكويت #ذكاء_اصطناعي #دراسة #StudyTok", "media": [], "video": "m/V3.mp4", "poster": "m/V3_cover.jpg", "dur": 23.5, "script": "<p>فيديو موشن عمودي 1080×1920 · 60 فريم · 23.5 ثانية · بلا تعليق صوتي (كتابة حركية + مؤثرات + ملف صوتي بالخلفية).</p><table><thead><tr><th>الوقت</th><th>النص على الشاشة</th><th>اللي يصير بصرياً</th><th>المؤثر الصوتي</th></tr></thead><tbody><tr><td>0.0–1.25</td><td>«الدكتور» · «البحث مطلوب الأسبوع الياي»</td><td>إشعار جوال فاتح ينزل من فوق بنابض، يهتز (رجّة)، وحلقات تنبض حوله</td><td>swoosh-pass · pop · tick tick</td></tr><tr><td>1.25–2.5</td><td>«وانت للحين / ما بديت؟»</td><td>الإشعار يطلع لفوق ويبهت، النص الكبير يخبط مع قليتش (شرائح + انقسام ألوان) ورجّة للشاشة، خط أزرق ينسحب تحت «ما بديت؟»، ونبضة قليتش ثانية</td><td>riser → impact + glitch · glitch صغير</td></tr><tr><td>2.5–4.5</td><td>«خلّه على» + شعار Urate · «البحوث والتقارير»</td><td>فلاش أبيض، الشعار يخبط من كبير مع موجات دائرية وانفجار نقاط وتوهج أزرق، وكبسولة الميزة تطلع تحت</td><td>whoosh · boom · shimmer</td></tr><tr><td>4.5–6.5</td><td>«بحث أو تقرير…» · «بـ3 خطوات»</td><td>مشهد 3D: ثلاث بلاطات زجاجية 1 · 2 · 3 تطير من العمق وتلف وتصف على الإيقاع، شرارات متوهجة، البلاطة 3 تنبض</td><td>whoosh · pop ×3 · impact</td></tr><tr><td>6.5–9.0</td><td>«خطوة 1» · «ارفع ملفاتك أو اكتب التفاصيل»</td><td>منطقة رفع بإطار متقطع يتحرك وأيقونة سحابة، ملفات PDF / DOCX تطيح فيها وحدة ورا وحدة، خانة كتابة تنكتب سطورها، شريط تقدّم يتعبّى وعلامة صح</td><td>swoosh · slide ×2 · typing · pop</td></tr><tr><td>9.0–11.5</td><td>«خطوة 2» · «اختار النوع واللغة» · «النوع: بحث / تقرير» · «اللغة: العربية / English»</td><td>بطاقة إعدادات فاتحة، المؤشر ينزلق من «بحث» لـ«تقرير»، ومفتاح اللغة يروح لـEnglish ويرجع للعربية</td><td>whoosh · tick · slide ×2</td></tr><tr><td>11.5–14.0</td><td>«خطوة 3» · «اختار عدد الصفحات» · «3 · 5 · 7 · مخصص»</td><td>رزمة أوراق تنفتح كالمروحة، المؤشر المتدرّج ينزلق 3 → 5 → 7 والأوراق تزيد، وشارة صفراء بالعدد</td><td>whoosh · pop · slide ×2</td></tr><tr><td>14.0–18.0</td><td>«وتابع شغلك خطوة بخطوة» · «استخراج النص» · «تحليل المحتوى» · «إنشاء المحتوى» · «التنسيق وفحص الجودة» · 0→100%</td><td>حلقة تقدّم متوهجة تعدّ لين 100%، والخطوات الأربع تتحول من مؤشر دوّار لعلامة صح، وانفجار نقاط عند 100%</td><td>swoosh · tick ×4 · riser · shimmer</td></tr><tr><td>18.0–20.0</td><td>«حمّله • اطبعه • شاركه»</td><td>رسمة البحوث (card_search) تطفو فوق، وثلاث أيقونات (تحميل، طابعة، مشاركة) تخبط وحدة ورا وحدة على الإيقاع مع موجات</td><td>whoosh · impact ×3</td></tr><tr><td>20.0–23.5</td><td>شعار Urate · «ادرس اذكى» · «حمّل Urate» · «App Store · Google Play»</td><td>انتقال دائري، الشعار يتوهج، زر متدرّج بلمعة، والروبوت Urate AI يطل من تحت يسار</td><td>reverse-whoosh · boom · pop · shimmer</td></tr></tbody></table>"}, {"id": "V4", "title": "خمس أدوات", "cap": "5 أشياء تلفونك يسويها لك بالجامعة وانت ما تدري 👀\nيلخّص ملزمتك، يسوي لك اختبار من نفس الملف، يطلّع لك كروت مراجعة، يساعدك بالبحوث والتقارير، ويعرّفك على الدكتور قبل لا تسجّل.\nكلها بالذكاء الاصطناعي… بتطبيق واحد 🤖\nلطلبة جامعة الكويت والتطبيقي والجامعات الخاصة.\nحمّل Urate من App Store و Google Play — ادرس اذكى 💙", "tags": "#Urate #ادرس_اذكى #جامعة_الكويت #التطبيقي #الكويت #طلاب_الجامعة #ذكاء_اصطناعي #ملخصات #اختبارات #بحوث #تقييم_الدكاترة #دراسة", "media": [], "video": "m/V4.mp4", "poster": "m/V4_cover.jpg", "dur": 23.0, "script": "<p>فيديو موشن عمودي 1080×1920، 60 فريم، 23 ثانية. بدون تعليق صوتي: النص على الشاشة + مؤثرات + ملف صوتي بالخلفية (120 BPM، كل أداة = بار واحد = 2 ث).</p><table><thead><tr><th>الوقت (ث)</th><th>النص على الشاشة</th><th>اللي يصير بصرياً</th><th>المؤثر الصوتي</th></tr></thead><tbody><tr><td>0.0 – 1.0</td><td>5 · «أشياء…»</td><td>الرقم 5 ينزل ضخم ويخبط داخل مربع بتدرّج أزرق، حلقات صدمة وشرارات، والشاشة ترج</td><td>impact + sub-drop (0.15)، whoosh (0.45)</td></tr><tr><td>1.0 – 3.0</td><td>«ما تدري إن تلفونك / يسويها لك بالجامعة»</td><td>«5 أشياء» يصغر ويطلع فوق، والجملة تطلع كلمة كلمة من تحت، وخط متدرّج متوهّج يرتسم تحت «بالجامعة»</td><td>swoosh-pass (1.2)، pop (1.3)، shimmer (1.9)</td></tr><tr><td>3.0 – 5.0</td><td>عدّاد 1 · «التلخيص» · «يلخّص ملزمتك»</td><td>انتقال zoom. العدّاد يقلب من 0 لـ1، كرت الكتب يدخل منزلق من اليمين، ولمعة تمر عليه، وشريط التقدّم يتعبّى</td><td>whoosh + tick (3.0)، pop (3.3)</td></tr><tr><td>5.0 – 7.0</td><td>2 · «الاختبارات» · «يسوي لك اختبار من نفس الملف»</td><td>العدّاد يقلب لـ2، والكرت يطلع لليسار وكرت الكليب بورد يدخل بقلبة</td><td>whoosh + tick (5.0)، pop (5.3)</td></tr><tr><td>7.0 – 9.0</td><td>3 · «كروت المراجعة» · «يطلّع لك كروت مراجعة»</td><td>كرت الملفات يطيح من فوق</td><td>whoosh + tick (7.0)، pop (7.3)</td></tr><tr><td>9.0 – 11.0</td><td>4 · «البحوث والتقارير» · «يساعدك بالبحوث والتقارير»</td><td>كرت البحث يدخل بتكبير ولفّة</td><td>whoosh + tick (9.0)، pop (9.3)</td></tr><tr><td>11.0 – 13.0</td><td>5 · «تقييم الدكاترة» · «ويعرّفك على الدكتور قبل لا تسجّل»</td><td>كرت تقييم مرسوم (صورة عامة بدون اسم) يطلع من تحت، والنجوم الخمس تتعبّى وحدة وحدة</td><td>whoosh + tick (11.0)، shimmer (11.5)</td></tr><tr><td>13.0 – 14.6</td><td>«كلها بالذكاء الاصطناعي…»</td><td>مشهد 3D: الكروت الخمسة تدور حول المركز وبعدين تلتف وتنسحب لنقطة وحدة</td><td>whoosh (13.0)، riser ينتهي عند 14.6</td></tr><tr><td>14.6 – 17.0</td><td>«بتطبيق واحد»</td><td>ومضة، وحرف U من الشعار يطلع مجسّم ويلف مع حلقتين متوهّجتين وشرارات، وبعدين يتحرك يسار والروبوت (Urate AI) يدخل من اليمين</td><td>impact + shimmer (14.6)، slide + pop (15.2)</td></tr><tr><td>17.0 – 19.5</td><td>«لطلبة» · «جامعة الكويت» · «التطبيقي» · «الجامعات الخاصة»</td><td>انتقال push لفوق. ثلاث كبسولات زجاجية تدخل وحدة ورا الثانية من الجهتين، كل وحدة فيها أيقونة قبعة تخرّج، وخط متوهّج يربطهم</td><td>swoosh-pass (17.0)، 3× pop متصاعد (17.35 / 17.51 / 17.67)</td></tr><tr><td>19.5 – 23.0</td><td>شعار Urate · «ادرس اذكى» · زر «حمّل Urate» · «App Store · Google Play»</td><td>انتقال iris. حرف U يطلع وبعده الشعار ينفتح منه، أشعة ضوء تدور ورا، والزر المتدرّج ينبض على الإيقاع وتمر عليه لمعة</td><td>whoosh + impact (19.5)، shimmer (20.0)، pop (20.6)، shimmer (21.1)</td></tr></tbody></table>"}], "carousel": [{"id": "C1", "title": "خمس أدوات", "cap": "5 أدوات ذكاء اصطناعي… لو دريت عنها من أول سنة جان ارتحت 😮‍💨\n\n📘 تلخيص الملزمة\n📝 اختبار من نفس الملف\n🗂️ كروت مراجعة\n📚 بحوث وتقارير\n⭐ تقييم الدكاترة قبل لا تسجّل\n\nكلها بتطبيق واحد: Urate\nاحفظ البوست 📌 ومنشن ربعك اللي يحتاجها 👇", "tags": "#فاينل #اختبارات #ملخصات #تطبيقات_مفيدة #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/C1_1.jpg", "m/C1_2.jpg", "m/C1_3.jpg", "m/C1_4.jpg", "m/C1_5.jpg", "m/C1_6.jpg", "m/C1_7.jpg"]}, {"id": "C2", "title": "الملزمة طويلة", "cap": "الملزمة طويلة والوقت ما يكفي؟ 🫠\n\nارفع الملف ➜ اختار نوع الملخص (سريع، قياسي، مفصّل، مخصّص) ➜ اختار اللغة… والذكاء الاصطناعي يسوي الباقي ✨\n\nونصيحة: لا توقف عند الملخص، سوّ من نفس الملف كروت مراجعة واختبار 💪\nاحفظها وارجع لها قبل الاختبار 📌", "tags": "#تلخيص #ملخصات #ملزمة #فاينل #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/C2_1.jpg", "m/C2_2.jpg", "m/C2_3.jpg", "m/C2_4.jpg", "m/C2_5.jpg", "m/C2_6.jpg"]}, {"id": "C3", "title": "اختبر نفسك", "cap": "الدكتور بيختبرك… ليش ما تختبر نفسك قبله؟ 🤔\n\nارفع ملف المادة، والذكاء الاصطناعي يطلّع لك اختبار كامل.\nتبي حماس؟ الوضع المتقدم 🃏\nتبي تشوف كل شي مرة وحدة؟ الوضع الكلاسيكي 📜\nوبعدها شوف نتيجتك وافهم غلطتك 💡\n\nأرسلها لربعك اللي عندهم اختبار هالأسبوع 📩", "tags": "#اختبارات #ميد #فاينل #اختبار_تجريبي #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/C3_1.jpg", "m/C3_2.jpg", "m/C3_3.jpg", "m/C3_4.jpg", "m/C3_5.jpg", "m/C3_6.jpg"]}, {"id": "C4", "title": "الدقايق الضايعة", "cap": "بالطابور، بالسيارة، قبل المحاضرة… ذاكر بالدقايق الضايعة ⏳\n\nصوّر الصفحة أو ارفع الملف، والذكاء الاصطناعي يحوّلها كروت مراجعة 🗂️\nاقلب الكرت 🔄 وتابع تقدّمك لين توصل 100% 😌\n\nاحفظ البوست وجرّبها اليوم 📌", "tags": "#كروت_مراجعة #فلاش_كاردز #مراجعة #نصائح_دراسية #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/C4_1.jpg", "m/C4_2.jpg", "m/C4_3.jpg", "m/C4_4.jpg", "m/C4_5.jpg"]}, {"id": "C5", "title": "البحث مطلوب", "cap": "الدكتور: البحث مطلوب الأسبوع الياي 📚\nوانت للحين ما بديت؟ 👀\n\nبـ3 خطوات في Urate:\n1️⃣ ارفع ملفاتك أو اكتب التفاصيل\n2️⃣ اختار النوع (بحث أو تقرير) واللغة\n3️⃣ اختار عدد الصفحات\nوتابع شغلك خطوة بخطوة… وبعدين حمّله، اطبعه، أو شاركه ✅\n\nمنشن شريكك بالبحث 👇", "tags": "#بحوث #تقارير #بحث_جامعي #واجبات #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/C5_1.jpg", "m/C5_2.jpg", "m/C5_3.jpg", "m/C5_4.jpg", "m/C5_5.jpg", "m/C5_6.jpg"]}, {"id": "C6", "title": "لا تسجل مغمض", "cap": "موسم التسجيل 📅 لا تسجّل عند دكتور وانت مغمّض 🙈\n\n🔍 دوّر على أي دكتور بالاسم\n💬 اقرا تقييمات الطلبة وتعليقاتهم\n⚖️ قارن بين دكتورين\n⭐ وقيّم دكتورك… عشان اللي بعدك\n\nلجامعة الكويت والتطبيقي والجامعات الخاصة 🎓\nأرسلها للقروب قبل التسجيل 📩", "tags": "#تسجيل_المواد #تقييم_الدكاترة #دكاترة #جدول #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/C6_1.jpg", "m/C6_2.jpg", "m/C6_3.jpg", "m/C6_4.jpg", "m/C6_5.jpg", "m/C6_6.jpg"]}], "post": [{"id": "P1", "title": "سألت القروب", "cap": "POV: سألت القروب «منو أحسن دكتور للمادة؟» 🙏\nوبعد أسبوع: «ما أدري والله» 💀\n\nفي Urate تشوف تقييمات الطلبة لكل دكتور… الحين، مو بعد أسبوع ⭐", "tags": "#تسجيل_المواد #تقييم_الدكاترة #ميمز_جامعة #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/P1_1.jpg"]}, {"id": "P2", "title": "قبل وبعد", "cap": "نفس الملزمة… بس أخف 😌\nقبل: ملزمة طويلة 😵‍💫\nبعد: ملخص يفهمك 📘\n\nسريع · قياسي · مفصّل · مخصّص… انت تختار، والذكاء الاصطناعي يلخّص.", "tags": "#تلخيص #ملخصات #ملزمة #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/P2_1.jpg"]}, {"id": "P3", "title": "جاوب بالكومنت", "cap": "اختبار سريع 🧠 جاوب بالكومنت 👇 (أ، ب، ج، د)\n\nوإذا تبي اختبار كامل من ملزمتك انت… Urate يسويه لك بالذكاء الاصطناعي 🤖", "tags": "#اختبارات #تحدي #سؤال_اليوم #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/P3_1.jpg"]}, {"id": "P4", "title": "كرت ورا كرت", "cap": "مو لازم تقعد 3 ساعات 🥱\nكرت ورا كرت… وتخلص المادة 🗂️\n\nكروت مراجعة بالذكاء الاصطناعي من ملفك أو صورتك، بس في Urate.", "tags": "#كروت_مراجعة #مراجعة #نصائح_دراسية #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/P4_1.jpg"]}, {"id": "P5", "title": "إنك تبدأ", "cap": "أصعب شي بالبحث؟ إنك تبدأ.\nخلّ Urate يبدأ وياك: ارفع ملفاتك ➜ اختار النوع واللغة ➜ حدد عدد الصفحات 📚", "tags": "#بحوث #تقارير #بحث_جامعي #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/P5_1.jpg"]}, {"id": "P6", "title": "تعرف على Urate AI", "cap": "تعرّف على Urate AI 🤖 رفيقك الذكي بالجامعة\n\n📘 ملخصات\n📝 اختبارات\n🗂️ كروت مراجعة\n📚 بحوث وتقارير\n⭐ تقييم الدكاترة\n\nادرس اذكى… مو أكثر 💙", "tags": "#تطبيقات_مفيدة #طلاب_جامعة #Urate #يوريت #جامعة_الكويت #التطبيقي #الجامعات_الخاصة #طلاب_الكويت #الكويت #ذكاء_اصطناعي #مذاكرة #جامعة", "media": ["m/P6_1.jpg"]}]};
+const esc = s => (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const kindName = {video:'فيديو', carousel:'كيروسيل', post:'بوست'};
+document.getElementById('stats').innerHTML =
+  [['video','فيديوهات'],['carousel','كيروسيلات'],['post','بوستات']].map(([k,l]) => `<span class="stat"><b>${DATA[k].length}</b> ${l}</span>`).join('');
+
+function captionBlock(e, extra = '') {
+  return `<details${e.open ? ' open' : ''}><summary>الكابشن والهاشتاقات</summary>
+    <div class="cap">${esc(e.cap)}</div><div class="tags">${esc(e.tags)}</div>
+    <button class="copy" type="button" data-copy="${esc(e.cap + '\n\n' + e.tags)}">انسخ الكابشن</button>${extra}</details>`;
+}
+const DL_ICON = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>';
+const IG = 'instagram_4x5', TT = 'tiktok_9x16';
+function dlLink(href, name, title, sub, alt) {
+  return `<a${alt ? ' class="alt"' : ''} href="${href}" download="${name}">${DL_ICON}<span>${title}<small>${sub}</small></span></a>`;
+}
+function downloads(kind, e) {
+  const base = 'Urate_' + e.id;
+  if (kind === 'video') return `<div class="dl">
+    ${dlLink(`dl/vid/${e.id}_${TT}.mp4`, `${base}_${TT}.mp4`, 'تيكتوك وريلز', '<bdi dir="ltr">9:16 · 1080×1920</bdi>')}
+    ${dlLink(`dl/vid/${e.id}_${IG}.mp4`, `${base}_${IG}.mp4`, 'انستقرام فيد', '<bdi dir="ltr">4:5 · 1080×1350</bdi>', true)}</div>`;
+  if (kind === 'carousel') return `<div class="dl"><span class="dl-label">كل الشرايح (ملف مضغوط + الكابشن)</span>
+    ${dlLink(`dl/zip/${e.id}_${IG}.zip`, `${base}_${IG}.zip`, 'انستقرام', '<bdi dir="ltr">4:5</bdi> · ' + e.media.length + ' شرايح')}
+    ${dlLink(`dl/zip/${e.id}_${TT}.zip`, `${base}_${TT}.zip`, 'تيكتوك', '<bdi dir="ltr">9:16</bdi> · ' + e.media.length + ' شرايح', true)}
+    <span class="dl-label">الشريحة الحالية</span>
+    <a class="alt one" data-fmt="${IG}" href="dl/img/${e.id}_1_${IG}.jpg" download="${base}_1_${IG}.jpg">${DL_ICON}<span>انستقرام<small>شريحة <b class="n">1</b> · <bdi dir="ltr">4:5</bdi></small></span></a>
+    <a class="alt one" data-fmt="${TT}" href="dl/img/${e.id}_1_${TT}.jpg" download="${base}_1_${TT}.jpg">${DL_ICON}<span>تيكتوك<small>شريحة <b class="n">1</b> · <bdi dir="ltr">9:16</bdi></small></span></a></div>`;
+  return `<div class="dl">
+    ${dlLink(`dl/img/${e.id}_${IG}.jpg`, `${base}_${IG}.jpg`, 'انستقرام', '<bdi dir="ltr">4:5 · 1080×1350</bdi>')}
+    ${dlLink(`dl/img/${e.id}_${TT}.jpg`, `${base}_${TT}.jpg`, 'تيكتوك وستوري', '<bdi dir="ltr">9:16 · 1080×1920</bdi>', true)}</div>`;
+}
+function card(kind, e) {
+  let media = '';
+  if (kind === 'video') media = `<div class="media"><video controls playsinline preload="none" poster="${e.poster}" src="${e.video}"></video></div>`;
+  else if (kind === 'carousel') media = `<div class="media"><div class="strip">${e.media.map((m, i) => `<img src="${m}" alt="${esc(e.title)} — شريحة ${i + 1}" loading="lazy">`).join('')}</div>
+      <button class="nav-btn prev" type="button" aria-label="الشريحة السابقة">›</button><button class="nav-btn next" type="button" aria-label="الشريحة التالية">‹</button></div>
+      <div class="dots">${e.media.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>`;
+  else media = `<div class="media"><img src="${e.media[0]}" alt="${esc(e.title)}" loading="lazy"></div>`;
+  const len = kind === 'video' ? `${e.dur} ث` : kind === 'carousel' ? `${e.media.length} شرايح` : '';
+  const script = kind === 'video' && e.script ? `<div class="script"><b>السكربت</b>${e.script}</div>` : '';
+  return `<article class="item">${media}<div class="meta"><span class="code">${e.id}</span><h3>${esc(e.title)}</h3><span class="len">${len}</span></div>${downloads(kind, e)}${captionBlock(e, script)}</article>`;
+}
+for (const k of ['video', 'carousel', 'post']) document.getElementById('g-' + k).innerHTML = DATA[k].map(e => card(k, e)).join('');
+
+document.querySelectorAll('.item').forEach(it => {
+  const strip = it.querySelector('.strip'); if (!strip) return;
+  const dots = [...it.querySelectorAll('.dots i')];
+  const idx = () => Math.round(Math.abs(strip.scrollLeft) / strip.clientWidth);
+  const id = it.querySelector('.code').textContent;
+  const sync = () => { const i = idx(); dots.forEach((d, j) => d.classList.toggle('on', i === j));
+    it.querySelectorAll('a.one').forEach(a => { const f = a.dataset.fmt, n = i + 1;
+      a.href = `dl/img/${id}_${n}_${f}.jpg`; a.download = `Urate_${id}_${n}_${f}.jpg`; a.querySelector('.n').textContent = n; }); };
+  strip.addEventListener('scroll', sync, {passive: true});
+  const go = d => strip.scrollBy({left: -d * strip.clientWidth, behavior: 'smooth'});
+  it.querySelector('.next').onclick = () => go(1);
+  it.querySelector('.prev').onclick = () => go(-1);
+});
+document.addEventListener('click', async ev => {
+  const b = ev.target.closest('.copy'); if (!b) return;
+  try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'تم النسخ'; }
+  catch { const cap = b.parentElement.querySelector('.cap'); const r = document.createRange(); r.selectNodeContents(cap); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'محدد — انسخه'; }
+  setTimeout(() => b.textContent = 'انسخ الكابشن', 1800);
+});
+</script>
+</body>
+</html>
