@@ -19,3 +19,11 @@
   بنفس معاملات محرّك الرندر (`audio.py` · `R_cutdowns/build.py`) · المؤثرات المعروفة من المكتبة تُركت بمستواها.
 - **S1–S8:** القصص كانت بلا موسيقى (صوت فقط) ⇒ موسيقى جديدة مولّدة بالكود (`musicbed.py` من مصنع المحتوى — MIT · بلا حقوق) · لكل قصة مقام ونمط.
 - **V1–V4** أصلاً بلا تعليق صوتي ⇒ لا نسخة لها هنا (الصفحة تستعمل الأصل).
+
+### ملف واحد مجمَّع للعرض بلا إنترنت — إصدار `expo-all`
+
+- الـ٢٦ (موسيقى ومؤثرات بلا تعليق صوتي) في فيديو واحد ١١:٤٨ د · ترتيب عشوائي ثابت لا يتجاور فيه فيديوهان من نفس السلسلة.
+- يبنيه `tools/expo-all.sh` على GitHub Actions (`.github/workflows/expo-all.yml` — يدوياً أو تلقائياً مع أي تغيير في `expo/`) وينشره إصداراً:
+  - https://github.com/alshala7i/urate-content/releases/download/expo-all/urate-expo-all.mp4 (1080×1920 · 60 إطار)
+  - https://github.com/alshala7i/urate-content/releases/download/expo-all/urate-expo-all-720.mp4 (720×1280)
+- صفحة التحميل: https://trycf.app/urate/download (وزر في https://trycf.app/urate قبل أول لمسة).
