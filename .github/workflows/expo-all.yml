@@ -1,0 +1,47 @@
+# Joins the 26 voice-free exhibit videos into one file (tools/expo-all.sh) and publishes it as the «expo-all» release,
+# for offline playback on the exhibit screen. Linked from https://trycf.app/urate (download button) and https://trycf.app/urate/download.
+# Stable download links (always the latest build):
+#   https://github.com/alshala7i/urate-content/releases/download/expo-all/urate-expo-all.mp4
+#   https://github.com/alshala7i/urate-content/releases/download/expo-all/urate-expo-all-720.mp4
+name: expo-all
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['expo/**', 'tools/expo-all.sh']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: expo-all
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            expo
+            dl/vid
+            tools
+      - name: ffmpeg
+        run: command -v ffmpeg >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - name: Build the joined file
+        run: ./tools/expo-all.sh dist 2>&1 | tr '\r' '\n' | grep -v '^frame=' || true; ls -la dist; test -s dist/urate-expo-all.mp4 && test -s dist/urate-expo-all-720.mp4
+      - name: Publish release expo-all
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          NOTES="Urate — all 26 exhibit videos (music + SFX, no voice-over) joined for offline playback. Built from ${GITHUB_SHA::7}."
+          if gh release view expo-all >/dev/null 2>&1; then
+            gh release upload expo-all dist/urate-expo-all.mp4 dist/urate-expo-all-720.mp4 --clobber
+            gh release edit expo-all --notes "$NOTES"
+          else
+            gh release create expo-all dist/urate-expo-all.mp4 dist/urate-expo-all-720.mp4 --title "Urate exhibit — all videos" --notes "$NOTES" --latest=false
+          fi
+          for f in dist/*.mp4; do echo "- $(basename $f): $(stat -c %s $f) bytes · $(ffprobe -v error -show_entries format=duration -of csv=p=0 $f) s" >> "$GITHUB_STEP_SUMMARY"; done
